@@ -21,10 +21,22 @@
 //open root, and type ".L ra_dec_to_alt_az.cxx"
 //then you can call "main (blah, blah, blah, blah, blah)"
 
+//the test case I confirmed against astropy
+//is for a GRB on Jan 2 2013 at 18:10 UTC (or UTC = 1357150200)
+//for A2 (LAT = -89.8105588, LON = -109.70392)
+//and RA = 311.43 and DEC = 49.818
+//the results are the following
+//main(1357150200,311.43,49.818,-109.70392,-89.8105588)
+//(Az, Alt) in deg: (45.9363 , -49.6864)
+//(NewDomainAz, Alt) in deg: (44.0637 , -49.6864)
+//(NewDomainAz, Alt) in rad: (0.769057 , -0.867192)
+
+
 //function declarations
 int days_till_start_of_month(int month, int year);
 double days_since_2000(int year);
 double rerange(double LST);
+double convert_azimuth(double input_az);
 
 using namespace std;
 
