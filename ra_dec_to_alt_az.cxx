@@ -99,6 +99,36 @@ void main(int UTC, double RA, double DEC, double LON, double LAT){
 	
 	//print the result!
 	cout<<"(Az, Alt) in deg: ("<<az<<" , "<<alt<<")"<<endl;
+	
+	//change coordinate systems to continent
+	double new_domain_az = convert_azimuth(az);
+	
+	//print the converted result
+	cout<<"(NewDomainAz, Alt) in deg: ("<<new_domain_az<<" , "<<alt<<")"<<endl;
+	
+	//lastly, we want to be able to print this in radians
+	double alt_radians = alt*TMath::DegToRad();
+	double new_domain_az_radians = new_domain_az*TMath::DegToRad();
+	
+	cout<<"(NewDomainAz, Alt) in rad: ("<<new_domain_az_radians<<" , "<<alt_radians<<")"<<endl;
+
+	
+}
+
+double convert_azimuth(double input_az){
+	//now to convert to Antarctic continent frame
+	//the code returns 0 -> 360 where N=0, E=90, S=180, W=270, which is Clock-Wise
+	//so, the first thing we need to do is change the handedness to Counter Clock-Wise
+	//need E=0, N=90, W=180, S=270
+	
+	double new_az = 450. - input_az;
+	if(new_az > 360.) new_az-+360.;
+	
+	//now, we need to convert from 0 -> 360 to -180 -> +180
+	double new_domain_az = new_az;
+	if(new_az > 180.) new_domain_az = -360. + new_az;
+	
+	return new_domain_az;
 }
 
 //this will be a recursive function to make LST between 0 and 360
